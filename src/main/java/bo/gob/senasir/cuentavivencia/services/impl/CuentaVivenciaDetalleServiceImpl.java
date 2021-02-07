@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import bo.gob.senasir.cuentavivencia.services.CuentaVivenciaDetalleService;
 import bo.gob.senasir.cuentavivencia.services.CuentaVivenciaService;
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaDetalleAux;
 import bo.gob.senasir.seguridad.model.Archivosadjuntos;
 import bo.gob.senasir.seguridad.services.ArchivosadjuntosService;
 import bo.gob.senasir.seguridad.vo.SeguridadVo;
+import java.util.List;
 
 /**
  *
@@ -78,5 +80,9 @@ public class CuentaVivenciaDetalleServiceImpl implements CuentaVivenciaDetalleSe
 
         this.cuentaVivenciaService.actualizarCuentaVigenciaDetInicial(cuentaVivenciaVo.getIdCuentaVivencia(),
                 cuentaVivenciaDetalle.getIdCuentaVivenciaDet());
+    }
+
+    public List<CuentaVivenciaDetalleAux> obtRegistrosPorCuentaVivencia(Long idCuentaVivencia) {
+        return this.cuentaVivenciaDetalleRepository.obtRegistrosPorCuentaVivencia(idCuentaVivencia);
     }
 }

@@ -5,6 +5,7 @@
  */
 package bo.gob.senasir.cuentavivencia.model;
 
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaDetalleAux;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -18,6 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -50,6 +53,18 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "CuentaVivenciaDetalle.findByToken", query = "SELECT c FROM CuentaVivenciaDetalle c WHERE c.token = :token")
     , @NamedQuery(name = "CuentaVivenciaDetalle.findByOrigen", query = "SELECT c FROM CuentaVivenciaDetalle c WHERE c.origen = :origen")
     , @NamedQuery(name = "CuentaVivenciaDetalle.findByIdUsuario", query = "SELECT c FROM CuentaVivenciaDetalle c WHERE c.idUsuario = :idUsuario")})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "CuentaVivenciaDetalle.obtRegistrosPorCuentaVivencia", query
+            = "SELECT a.\"idCuentaVivenciaDet\", "
+            + "	   a.\"fechaInicio\", "
+            + "	   a.\"fechaFin\", "
+            + "	   a.\"fechaRegistro\", "
+            + "	   d.\"DescripcionDetalle\" AS \"descEstado\" "
+            + "FROM \"Servicios\".\"CuentaVivenciaDetalle\" a, \"Clasificador\".\"DetalleClasificador\" d "
+            + "WHERE a.\"idEstado\" = d.iddetalleclasificador "
+            + "AND a.\"idCuentaVivencia\" = :idCuentaVivencia ",
+            resultClass = CuentaVivenciaDetalleAux.class)
+})
 public class CuentaVivenciaDetalle implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,7 +76,7 @@ public class CuentaVivenciaDetalle implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "\"fechaRegistro\"", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)    
     private Date fechaRegistro;
     @Basic(optional = false)
     @NotNull
@@ -264,5 +279,5 @@ public class CuentaVivenciaDetalle implements Serializable {
     public String toString() {
         return "bo.gob.senasir.cuentavivencia.model.CuentaVivenciaDetalle[ idCuentaVivenciaDet=" + idCuentaVivenciaDet + " ]";
     }
-    
+
 }

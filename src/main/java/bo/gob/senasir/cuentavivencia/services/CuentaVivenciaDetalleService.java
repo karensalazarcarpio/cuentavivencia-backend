@@ -5,7 +5,9 @@
  */
 package bo.gob.senasir.cuentavivencia.services;
 
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaDetalleAux;
 import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaVo;
+import java.util.List;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 
 /**
@@ -15,4 +17,6 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 public interface CuentaVivenciaDetalleService {
 
     public void guardarCuentaVivenciaDetalles(CuentaVivenciaVo cuentaVivenciaVo, FormDataBodyPart selphi, FormDataBodyPart video);
+
+    public List<CuentaVivenciaDetalleAux> obtRegistrosPorCuentaVivencia(Long idCuentaVivencia);
 }

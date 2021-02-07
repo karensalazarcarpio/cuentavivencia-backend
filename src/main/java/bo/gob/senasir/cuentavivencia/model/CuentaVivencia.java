@@ -54,7 +54,6 @@ import javax.xml.bind.annotation.XmlTransient;
             + "  FROM \"Servicios\".\"CuentaVivencia\" a "
             + " WHERE a.\"idPersonaTitular\" = :idPersonaTitular "
             + " AND CAST(COALESCE (a.\"idPersonaDH\",-1) AS BIGINT) = COALESCE(CAST(CAST(:idPersonaDH AS TEXT) AS BIGINT),-1)",
-            //+ " AND CASE WHEN a.\"idPersonaDH\" IS NULL THEN -1 ELSE a.\"idPersonaDH\" END = CASE WHEN :idPersonaDH IS NULL THEN -1 ELSE :idPersonaDH END",
             resultClass = CuentaVivenciaAux.class)
 })
 public class CuentaVivencia implements Serializable {
@@ -73,7 +72,7 @@ public class CuentaVivencia implements Serializable {
     private Long idPersonaDH;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "\"fechaRegistro\"", nullable = false)
+    @Column(name = "\"fechaRegistro\"", nullable = false)    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
     @Basic(optional = false)

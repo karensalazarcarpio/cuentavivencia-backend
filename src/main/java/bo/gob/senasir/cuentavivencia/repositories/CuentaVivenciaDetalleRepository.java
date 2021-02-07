@@ -5,9 +5,11 @@
  */
 package bo.gob.senasir.cuentavivencia.repositories;
 
-
 import bo.gob.senasir.cuentavivencia.model.CuentaVivenciaDetalle;
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaDetalleAux;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,5 +18,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CuentaVivenciaDetalleRepository extends JpaRepository<CuentaVivenciaDetalle, Object> {
-    
+
+    public List<CuentaVivenciaDetalleAux> obtRegistrosPorCuentaVivencia(
+            @Param("idCuentaVivencia") Long idCuentaVivencia
+    );
 }

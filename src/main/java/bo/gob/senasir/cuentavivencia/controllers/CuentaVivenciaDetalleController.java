@@ -1,11 +1,16 @@
 package bo.gob.senasir.cuentavivencia.controllers;
 
 import bo.gob.senasir.cuentavivencia.services.CuentaVivenciaDetalleService;
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaDetalleAux;
 import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaVo;
 import java.math.BigInteger;
+import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -49,5 +54,13 @@ public class CuentaVivenciaDetalleController {
         validarVivencia(cuentaVivenciaVo);
         cuentaVivenciaDetalleService.guardarCuentaVivenciaDetalles(cuentaVivenciaVo, selphi, video);
         return "OK";
+    }
+
+    @Path("obtvivenciasdetalle")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<CuentaVivenciaDetalleAux> obtCuentaVivenciaPorPersona(
+            @QueryParam("idCuentaVivencia") Long idCuentaVivencia) {
+        return this.cuentaVivenciaDetalleService.obtRegistrosPorCuentaVivencia(idCuentaVivencia);
     }
 }

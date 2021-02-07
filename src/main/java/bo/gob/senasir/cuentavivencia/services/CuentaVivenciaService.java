@@ -7,7 +7,6 @@ package bo.gob.senasir.cuentavivencia.services;
 
 import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaAux;
 import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaVo;
-import java.math.BigInteger;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 
 /**
