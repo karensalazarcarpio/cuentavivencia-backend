@@ -11,10 +11,9 @@
            http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
            http://www.springframework.org/schema/data/jpa
            http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
-    <context:component-scan base-package="bo.gob.senasir.sarcoweb.services" /> 
+    
     <context:component-scan base-package="bo.gob.senasir.cuentavivencia.services" />
-     <context:component-scan base-package="bo.gob.senasir.seguridad.services" />
+    <context:component-scan base-package="bo.gob.senasir.seguridad.services" />
   
     <bean id="entityManagerFactory" 
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -32,28 +31,16 @@
         </property>
         <property name="packagesToScan">
             <array>
-                <value>bo.gob.senasir.sarcoweb.model</value>
-                <value>bo.gob.senasir.referencial.model</value>
-                <value>bo.gob.senasir.referencial.vo</value>
-                <value>bo.gob.senasir.sarcoweb.vo</value>
                 <value>bo.gob.senasir.cuentavivencia.model</value>  
                 <value>bo.gob.senasir.seguridad.model</value>
                 <value>bo.gob.senasir.seguridad.vo</value> 
             </array>
         </property>
     </bean>
-    
-    
-   
-    
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:/cuentavivenciaDS"/>
         
     </bean>
-    <jpa:repositories
-        base-package="bo.gob.senasir.sarcoweb.repositories"
-        entity-manager-factory-ref="entityManagerFactory"
-        transaction-manager-ref="transactionManager"/>
     <jpa:repositories
         base-package="bo.gob.senasir.cuentavivencia.repositories"
         entity-manager-factory-ref="entityManagerFactory"

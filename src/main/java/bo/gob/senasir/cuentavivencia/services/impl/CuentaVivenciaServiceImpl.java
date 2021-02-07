@@ -15,8 +15,6 @@ import bo.gob.senasir.seguridad.model.Archivosadjuntos;
 import bo.gob.senasir.seguridad.services.ArchivosadjuntosService;
 import bo.gob.senasir.seguridad.vo.SeguridadVo;
 import java.io.InputStream;
-import java.util.List;
-import org.glassfish.jersey.media.multipart.BodyPart;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 
@@ -63,35 +61,7 @@ public class CuentaVivenciaServiceImpl implements CuentaVivenciaService {
     }
 
     @Transactional
-    public void guardarCuentaVivencia(CuentaVivenciaVo cuentaVivenciaVo, FormDataBodyPart files) {
-
-        List<BodyPart> archivos = files.getParent().getBodyParts();
-
-        //archivos.remove(0);
-        InputStream fileInputStream = archivos.get(0).getEntityAs(InputStream.class);
-        ContentDisposition fileMetaData = archivos.get(0).getContentDisposition();
-        SeguridadVo seguridadVo = new SeguridadVo();
-        seguridadVo.setUploadPathModulo(CuentaVivenciaConstantes.UPLOAD_PATH);
-        seguridadVo.setDescripcion("CI Anverso");
-        seguridadVo.setIdtipoadjunto(1L);//TODO
-
-        Archivosadjuntos archivoCIAnverso = this.archivosadjuntosService.adjuntarArchivo(seguridadVo, fileInputStream, fileMetaData);
-
-        fileInputStream = archivos.get(1).getEntityAs(InputStream.class);
-        fileMetaData = archivos.get(1).getContentDisposition();
-        seguridadVo.setDescripcion("CI Reverso");
-        seguridadVo.setIdtipoadjunto(1L);//TODO
-        Archivosadjuntos archivoCIReverso = this.archivosadjuntosService.adjuntarArchivo(seguridadVo, fileInputStream, fileMetaData);
-
-        cuentaVivenciaVo.setIdArchivoAnversoCI(archivoCIAnverso.getIdarchivoadjunto());
-
-        cuentaVivenciaVo.setIdArchivoReversoCI(archivoCIReverso.getIdarchivoadjunto());
-        this.crearRegistro(cuentaVivenciaVo);
-
-    }
-
-    @Transactional
-    public void guardarCuentaVivencia2(CuentaVivenciaVo cuentaVivenciaVo,
+    public void guardarCuentaVivencia(CuentaVivenciaVo cuentaVivenciaVo,
             FormDataBodyPart anversoCI, FormDataBodyPart reversoCI, FormDataBodyPart video) {
 
         InputStream fileInputStream = anversoCI.getEntityAs(InputStream.class);

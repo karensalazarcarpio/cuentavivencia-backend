@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bo.gob.senasir.cuentavivencia.controllers;
 
 import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaVo;
@@ -14,7 +9,6 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import bo.gob.senasir.cuentavivencia.services.CuentaVivenciaService;
-import bo.gob.senasir.sarcoweb.services.ClasificadorService;
 import java.math.BigInteger;
 
 /**
@@ -26,30 +20,12 @@ public class CuentaVivenciaController {
 
     @Autowired
     private CuentaVivenciaService cuentaVivenciaService;
-    @Autowired
-    private ClasificadorService clasificadorService;
 
     private void validarVivencia(CuentaVivenciaVo cuentaVivenciaVo) {
         //TODO
     }
 
     @Path("crea")
-    @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public String uploadFile(
-            @FormDataParam("file") FormDataBodyPart files,
-            @FormDataParam("data") FormDataBodyPart data
-    ) {
-        data.setMediaType(MediaType.APPLICATION_JSON_TYPE);
-        CuentaVivenciaVo cuentaVivenciaVo = data.getValueAs(CuentaVivenciaVo.class);
-
-        validarVivencia(cuentaVivenciaVo);
-        cuentaVivenciaService.guardarCuentaVivencia(cuentaVivenciaVo, files);
-
-        return "OK";
-    }
-
-    @Path("crea2")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public String uploadFile2(
@@ -78,7 +54,7 @@ public class CuentaVivenciaController {
         cuentaVivenciaVo.setMargenSuperior(margenSuperior);
 
         validarVivencia(cuentaVivenciaVo);
-        cuentaVivenciaService.guardarCuentaVivencia2(cuentaVivenciaVo, anversoCI, reversoCI, video);
+        cuentaVivenciaService.guardarCuentaVivencia(cuentaVivenciaVo, anversoCI, reversoCI, video);
 
         return "OK";
     }

@@ -13,10 +13,8 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
  * @author KSalazar
  */
 public interface CuentaVivenciaService {
-
-    public void guardarCuentaVivencia(CuentaVivenciaVo cuentaVivenciaVo, FormDataBodyPart files);
-
-    public void guardarCuentaVivencia2(CuentaVivenciaVo cuentaVivenciaVo,
+    
+    public void guardarCuentaVivencia(CuentaVivenciaVo cuentaVivenciaVo,
             FormDataBodyPart anversoCI, FormDataBodyPart reversoCI, FormDataBodyPart video);
 
     public void actualizarCuentaVigenciaDetInicial(Long idCuentaVivencia, Long idCuentaVivenciaDetInicial);
