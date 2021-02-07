@@ -9,7 +9,11 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import bo.gob.senasir.cuentavivencia.services.CuentaVivenciaService;
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaAux;
 import java.math.BigInteger;
+import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -28,19 +32,21 @@ public class CuentaVivenciaController {
     @Path("crea")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public String uploadFile2(
+    public String crea(
             @FormDataParam("anversoCI") FormDataBodyPart anversoCI,
             @FormDataParam("reversoCI") FormDataBodyPart reversoCI,
             @FormDataParam("video") FormDataBodyPart video,
             @FormDataParam("geoLatitud") String geoLatitud,
             @FormDataParam("geoLongitud") String geoLongitud,
-            @FormDataParam("idPersonaDH") BigInteger idPersonaDH,
+            @FormDataParam("idPersonaDH") Long idPersonaDH,
             @FormDataParam("idPersonaTitular") Long idPersonaTitular,
             @FormDataParam("idUsuario") BigInteger idUsuario,
             @FormDataParam("origen") String origen,
             @FormDataParam("token") String token,
             @FormDataParam("margenInferior") Double margenInferior,
-            @FormDataParam("margenSuperior") Double margenSuperior
+            @FormDataParam("margenSuperior") Double margenSuperior,
+            @FormDataParam("telefonoContacto") String telefonoContacto,
+            @FormDataParam("correoContacto") String correoContacto
     ) {
         CuentaVivenciaVo cuentaVivenciaVo = new CuentaVivenciaVo();
         cuentaVivenciaVo.setGeoLatitud(geoLatitud);
@@ -52,10 +58,21 @@ public class CuentaVivenciaController {
         cuentaVivenciaVo.setToken(token);
         cuentaVivenciaVo.setMargenInferior(margenInferior);
         cuentaVivenciaVo.setMargenSuperior(margenSuperior);
+        cuentaVivenciaVo.setTelefonoContacto(telefonoContacto);
+        cuentaVivenciaVo.setCorreoContacto(correoContacto);
 
         validarVivencia(cuentaVivenciaVo);
         cuentaVivenciaService.guardarCuentaVivencia(cuentaVivenciaVo, anversoCI, reversoCI, video);
 
         return "OK";
+    }
+
+    @Path("obtvivenciaxpersona")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public CuentaVivenciaAux obtCuentaVivenciaPorPersona(
+            @QueryParam("idPersonaTitular") Long idPersonaTitular,
+            @QueryParam("idPersonaDH") Long idPersonaDH) {
+        return this.cuentaVivenciaService.obtCuentaVivenciaPorPersona(idPersonaTitular, idPersonaDH);
     }
 }

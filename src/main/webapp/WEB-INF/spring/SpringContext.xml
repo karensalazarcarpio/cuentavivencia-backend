@@ -31,7 +31,8 @@
         </property>
         <property name="packagesToScan">
             <array>
-                <value>bo.gob.senasir.cuentavivencia.model</value>  
+                <value>bo.gob.senasir.cuentavivencia.model</value>
+                <value>bo.gob.senasir.cuentavivencia.vo</value>
                 <value>bo.gob.senasir.seguridad.model</value>
                 <value>bo.gob.senasir.seguridad.vo</value> 
             </array>

@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bo.gob.senasir.cuentavivencia.model;
 
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaAux;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -19,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -50,6 +48,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "CuentaVivencia.findByIdUsuario", query = "SELECT c FROM CuentaVivencia c WHERE c.idUsuario = :idUsuario")
     , @NamedQuery(name = "CuentaVivencia.findByGeoLongitud", query = "SELECT c FROM CuentaVivencia c WHERE c.geoLongitud = :geoLongitud")
     , @NamedQuery(name = "CuentaVivencia.findByIdArchivoVideo", query = "SELECT c FROM CuentaVivencia c WHERE c.idArchivoVideo = :idArchivoVideo")})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "CuentaVivencia.obtCuentaVivenciaPorPersona", query
+            = "SELECT a.\"idCuentaVivencia\" "
+            + "  FROM \"Servicios\".\"CuentaVivencia\" a "
+            + " WHERE a.\"idPersonaTitular\" = :idPersonaTitular "
+            + " AND CAST(COALESCE (a.\"idPersonaDH\",-1) AS BIGINT) = COALESCE(CAST(CAST(:idPersonaDH AS TEXT) AS BIGINT),-1)",
+            //+ " AND CASE WHEN a.\"idPersonaDH\" IS NULL THEN -1 ELSE a.\"idPersonaDH\" END = CASE WHEN :idPersonaDH IS NULL THEN -1 ELSE :idPersonaDH END",
+            resultClass = CuentaVivenciaAux.class)
+})
 public class CuentaVivencia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,9 +68,9 @@ public class CuentaVivencia implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "\"idPersonaTitular\"", nullable = false)
-    private long idPersonaTitular;
+    private Long idPersonaTitular;
     @Column(name = "\"idPersonaDH\"")
-    private BigInteger idPersonaDH;
+    private Long idPersonaDH;
     @Basic(optional = false)
     @NotNull
     @Column(name = "\"fechaRegistro\"", nullable = false)
@@ -96,6 +103,12 @@ public class CuentaVivencia implements Serializable {
     @NotNull
     @Column(name = "\"idArchivoVideo\"", nullable = false)
     private long idArchivoVideo;
+    @Size(max = 20)
+    @Column(name = "\"telefonoContacto\"", length = 20)
+    private String telefonoContacto;
+    @Size(max = 100)
+    @Column(name = "\"correoContacto\"", length = 100)
+    private String correoContacto;
     @JoinColumn(name = "\"idCuentaVivenciaDetInicial\"", referencedColumnName = "\"idCuentaVivenciaDet\"")
     @ManyToOne(fetch = FetchType.LAZY)
     private CuentaVivenciaDetalle idCuentaVivenciaDetInicial;
@@ -128,19 +141,19 @@ public class CuentaVivencia implements Serializable {
         this.idCuentaVivencia = idCuentaVivencia;
     }
 
-    public long getIdPersonaTitular() {
+    public Long getIdPersonaTitular() {
         return idPersonaTitular;
     }
 
-    public void setIdPersonaTitular(long idPersonaTitular) {
+    public void setIdPersonaTitular(Long idPersonaTitular) {
         this.idPersonaTitular = idPersonaTitular;
     }
 
-    public BigInteger getIdPersonaDH() {
+    public Long getIdPersonaDH() {
         return idPersonaDH;
     }
 
-    public void setIdPersonaDH(BigInteger idPersonaDH) {
+    public void setIdPersonaDH(Long idPersonaDH) {
         this.idPersonaDH = idPersonaDH;
     }
 
@@ -216,6 +229,22 @@ public class CuentaVivencia implements Serializable {
         this.idCuentaVivenciaDetInicial = idCuentaVivenciaDetInicial;
     }
 
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getCorreoContacto() {
+        return correoContacto;
+    }
+
+    public void setCorreoContacto(String correoContacto) {
+        this.correoContacto = correoContacto;
+    }
+
     @XmlTransient
     public List<CuentaVivenciaDetalle> getCuentaVivenciaDetalleList() {
         return cuentaVivenciaDetalleList;
@@ -249,5 +278,5 @@ public class CuentaVivencia implements Serializable {
     public String toString() {
         return "bo.gob.senasir.cuentavivencia.model.CuentaVivencia[ idCuentaVivencia=" + idCuentaVivencia + " ]";
     }
-    
+
 }

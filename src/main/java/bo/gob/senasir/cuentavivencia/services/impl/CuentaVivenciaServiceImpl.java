@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import bo.gob.senasir.cuentavivencia.services.CuentaVivenciaService;
+import bo.gob.senasir.cuentavivencia.vo.CuentaVivenciaAux;
 import bo.gob.senasir.seguridad.model.Archivosadjuntos;
 import bo.gob.senasir.seguridad.services.ArchivosadjuntosService;
 import bo.gob.senasir.seguridad.vo.SeguridadVo;
 import java.io.InputStream;
+import java.math.BigInteger;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 
@@ -47,6 +49,8 @@ public class CuentaVivenciaServiceImpl implements CuentaVivenciaService {
         cuentaVivencia.setIdPersonaTitular(cuentaVivenciaVo.getIdPersonaTitular());
         cuentaVivencia.setIdUsuario(cuentaVivenciaVo.getIdUsuario());
         cuentaVivencia.setOrigen(cuentaVivenciaVo.getOrigen());
+        cuentaVivencia.setCorreoContacto(cuentaVivenciaVo.getCorreoContacto());
+        cuentaVivencia.setTelefonoContacto(cuentaVivenciaVo.getTelefonoContacto());
 
         this.cuentaVivenciaRepository.save(cuentaVivencia);
     }
@@ -90,7 +94,10 @@ public class CuentaVivenciaServiceImpl implements CuentaVivenciaService {
         cuentaVivenciaVo.setIdArchivoVideo(archivoVideo.getIdarchivoadjunto());
 
         this.crearRegistro(cuentaVivenciaVo);
+    }
 
+    public CuentaVivenciaAux obtCuentaVivenciaPorPersona(Long idPersonaTitular, Long idPersonaDH) {
+        return this.cuentaVivenciaRepository.obtCuentaVivenciaPorPersona(idPersonaTitular, idPersonaDH);
     }
 
 }

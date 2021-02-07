@@ -10,12 +10,14 @@ public class CuentaVivenciaVo {
 
     private String geoLatitud;
     private String geoLongitud;
-    private BigInteger idPersonaDH;
+    private Long idPersonaDH;
     private Long idPersonaTitular;
     private Long idCuentaVivencia;
     private BigInteger idUsuario;
     private String origen;
     private String token;
+    private String correoContacto;
+    private String telefonoContacto;
     private Double margenInferior;
     private Double margenSuperior;
     private Long idArchivoSelphi;
@@ -39,11 +41,11 @@ public class CuentaVivenciaVo {
         this.geoLongitud = geoLongitud;
     }
 
-    public BigInteger getIdPersonaDH() {
+    public Long getIdPersonaDH() {
         return idPersonaDH;
     }
 
-    public void setIdPersonaDH(BigInteger idPersonaDH) {
+    public void setIdPersonaDH(Long idPersonaDH) {
         this.idPersonaDH = idPersonaDH;
     }
 
@@ -85,6 +87,22 @@ public class CuentaVivenciaVo {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getCorreoContacto() {
+        return correoContacto;
+    }
+
+    public void setCorreoContacto(String correoContacto) {
+        this.correoContacto = correoContacto;
+    }
+
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
     }
 
     public Double getMargenInferior() {
@@ -139,6 +157,5 @@ public class CuentaVivenciaVo {
     public String toString() {
         return "CuentaVivenciaVo{" + "geoLatitud=" + geoLatitud + ", geoLongitud=" + geoLongitud + ", idPersonaDH=" + idPersonaDH + ", idPersonaTitular=" + idPersonaTitular + ", idCuentaVivencia=" + idCuentaVivencia + ", idUsuario=" + idUsuario + ", origen=" + origen + ", token=" + token + ", margenInferior=" + margenInferior + ", margenSuperior=" + margenSuperior + ", idArchivoSelphi=" + idArchivoSelphi + ", idArchivoVideo=" + idArchivoVideo + ", idArchivoAnversoCI=" + idArchivoAnversoCI + ", idArchivoReversoCI=" + idArchivoReversoCI + '}';
     }
-    
 
 }
