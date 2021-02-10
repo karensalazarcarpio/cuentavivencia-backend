@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pedrito
+ * @author KSalazar
  */
 @Entity
 @Table(name = "archivosadjuntos", catalog = "Plataforma", schema = "\"Seguridad\"" )
@@ -56,7 +56,7 @@ public class Archivosadjuntos implements Serializable {
     @Size(min = 1, max = 150)
     @Column(name = "descripcion", nullable = false, length = 150)
     private String descripcion;
-    @Basic(optional = false)
+    //@Basic(optional = false)
     //@NotNull
     @Size(min = 1, max = 500)
     @Column(name = "ruta"
@@ -72,9 +72,9 @@ public class Archivosadjuntos implements Serializable {
     @NotNull
     @Column(name = "firmadigital", nullable = false)
     private boolean firmadigital;
-    @Basic(optional = false)
+    //@Basic(optional = false)
     //@NotNull
-    @Size(min = 1, max = 50)
+    //@Size(min = 1, max = 50)
     @Column(name = "crc", 
             //nullable = false, 
             length = 50)

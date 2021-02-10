@@ -1,0 +1,153 @@
+-- Table: Seguridad.archivosadjuntos
+
+-- DROP TABLE "Seguridad".archivosadjuntos;
+
+CREATE TABLE "Seguridad".archivosadjuntos
+(
+    idarchivoadjunto bigint NOT NULL DEFAULT nextval('"Seguridad".archivosadjuntos_idarchivoadjunto_seq'::regclass),
+    idtipoadjunto bigint NOT NULL,
+    descripcion character varying(150) COLLATE pg_catalog."default" NOT NULL,
+    ruta character varying(500) COLLATE pg_catalog."default",
+    extension character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    firmadigital boolean NOT NULL,
+    crc character varying(50) COLLATE pg_catalog."default",
+    nombrearchivo character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    fecharegistro date NOT NULL,
+    CONSTRAINT pk_archivosadjuntos PRIMARY KEY (idarchivoadjunto),
+    CONSTRAINT fk_archivosadjuntos_detalleclasificador FOREIGN KEY (idtipoadjunto)
+        REFERENCES "SarcoWeb".detalleclasificador (iddetalleclasificador) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "Seguridad".archivosadjuntos
+    OWNER to postgres;
+
+COMMENT ON TABLE "Seguridad".archivosadjuntos
+    IS 'Guarda la informacion de archivos adjuntos para todo los sistemas';
+
+COMMENT ON COLUMN "Seguridad".archivosadjuntos.idarchivoadjunto
+    IS 'Llave primaria de la tabla documento adjunto';
+
+COMMENT ON COLUMN "Seguridad".archivosadjuntos.idtipoadjunto
+    IS 'Fecha de registro de la hoja de ruta';
+
+COMMENT ON COLUMN "Seguridad".archivosadjuntos.descripcion
+    IS 'Descripcion de documento adjunto';
+
+COMMENT ON COLUMN "Seguridad".archivosadjuntos.ruta
+    IS 'Ruta del documento';
+
+COMMENT ON COLUMN "Seguridad".archivosadjuntos.extension
+    IS 'Tipo de extension del archivo';
+
+COMMENT ON COLUMN "Seguridad".archivosadjuntos.crc
+    IS 'Codigo CRC';
+
+
+
+-- Table: Servicios.CuentaVivencia
+
+-- DROP TABLE "Servicios"."CuentaVivencia";
+
+CREATE TABLE "Servicios"."CuentaVivencia"
+(
+    "idCuentaVivencia" bigint NOT NULL DEFAULT nextval('"Servicios"."CuentaVivencia_idCuentaVivencia_seq"'::regclass),
+    "idPersonaTitular" bigint NOT NULL,
+    "idPersonaDH" bigint,
+    "fechaRegistro" timestamp(0) without time zone NOT NULL,
+    "idCuentaVivenciaDetInicial" bigint,
+    "idArchivoAnversoCI" bigint NOT NULL,
+    "idArchivoReversoCI" bigint NOT NULL,
+    "geoLatitud" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    origen character varying(20) COLLATE pg_catalog."default",
+    "idUsuario" bigint,
+    "geoLongitud" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "CuentaVivencia_pkey" PRIMARY KEY ("idCuentaVivencia"),
+    CONSTRAINT "FK_CUENTAVIVENCIA_ARCHIVOANVERSOCI" FOREIGN KEY ("idArchivoAnversoCI")
+        REFERENCES "Seguridad".archivosadjuntos (idarchivoadjunto) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_CUENTAVIVENCIA_ARCHIVOREVERSOCI" FOREIGN KEY ("idArchivoReversoCI")
+        REFERENCES "Seguridad".archivosadjuntos (idarchivoadjunto) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "Servicios"."CuentaVivencia"
+    OWNER to postgres;
+
+
+-- Table: Servicios.CuentaVivenciaDetalle
+
+-- DROP TABLE "Servicios"."CuentaVivenciaDetalle";
+
+CREATE TABLE "Servicios"."CuentaVivenciaDetalle"
+(
+    "idCuentaVivenciaDet" bigint NOT NULL DEFAULT nextval('"Servicios"."CuentaVivenciaDetalle_idCuentaVivenciaDet_seq"'::regclass),
+    "idCuentaVivencia" bigint NOT NULL,
+    "fechaRegistro" date NOT NULL,
+    "fechaInicio" date NOT NULL,
+    "fechaFin" date NOT NULL,
+    "idArchivoVideo" bigint NOT NULL,
+    "idArchivoSelphi" bigint NOT NULL,
+    "margenSuperior" double precision,
+    "margenInferior" double precision,
+    "idEstado" bigint NOT NULL,
+    token character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    origen character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    "idUsuario" bigint,
+    CONSTRAINT "PK_CUENTAVIVENCIADETALLE" PRIMARY KEY ("idCuentaVivenciaDet"),
+    CONSTRAINT "FK_CUENTAVIVENCIADETALLE_ARCHIVOSELPHI" FOREIGN KEY ("idArchivoSelphi")
+        REFERENCES "Seguridad".archivosadjuntos (idarchivoadjunto) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_CUENTAVIVENCIADETALLE_ARCHIVOVIDEO" FOREIGN KEY ("idArchivoVideo")
+        REFERENCES "Seguridad".archivosadjuntos (idarchivoadjunto) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_CUENTAVIVENCIADETALLE_CUENTAVIVENCIA" FOREIGN KEY ("idCuentaVivencia")
+        REFERENCES "Servicios"."CuentaVivencia" ("idCuentaVivencia") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "Servicios"."CuentaVivenciaDetalle"
+    OWNER to postgres;	
+	
+	
+-- Constraint: FK_CUENTAVIVENCIA_CUENTAVIVENCIADETALLE
+
+-- ALTER TABLE "Servicios"."CuentaVivencia" DROP CONSTRAINT "FK_CUENTAVIVENCIA_CUENTAVIVENCIADETALLE";
+
+ALTER TABLE "Servicios"."CuentaVivencia"
+    ADD CONSTRAINT "FK_CUENTAVIVENCIA_CUENTAVIVENCIADETALLE" FOREIGN KEY ("idCuentaVivenciaDetInicial")
+    REFERENCES "Servicios"."CuentaVivenciaDetalle" ("idCuentaVivenciaDet") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+ALTER TABLE "Servicios"."CuentaVivenciaDetalle"
+    ADD CONSTRAINT "FK_CUENTAVIVENCIADETALLE_DETCLASIFESTADO" FOREIGN KEY ("idEstado")
+    REFERENCES "Clasificador"."DetalleClasificador" ("iddetalleclasificador") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;	
+
+INSERT INTO "Clasificador"."TipoClasificador"(
+	idtipoclasificador, "DescripcionClasificador", "RegistroActivo")
+	VALUES (18, 'Estado vivencias', 1);
+	
+INSERT INTO "Clasificador"."DetalleClasificador"(
+	iddetalleclasificador, "CodigoClasificador", "DescripcionDetalle", "FechaFin", "FechaRegistro", "RegistroActivo", "IdTipoClasificador", "IdClasificadorSenarit")
+	VALUES (72, 'VIVENCIAPENDIENTE', 'PENDIENTE', NULL, now(), 1, 18, NULL);
+INSERT INTO "Clasificador"."DetalleClasificador"(
+	iddetalleclasificador, "CodigoClasificador", "DescripcionDetalle", "FechaFin", "FechaRegistro", "RegistroActivo", "IdTipoClasificador", "IdClasificadorSenarit")
+	VALUES (73, 'VIVENCIARECHAZADO', 'RECHAZADO', NULL, now(), 1, 18, NULL);
+INSERT INTO "Clasificador"."DetalleClasificador"(
+	iddetalleclasificador, "CodigoClasificador", "DescripcionDetalle", "FechaFin", "FechaRegistro", "RegistroActivo", "IdTipoClasificador", "IdClasificadorSenarit")
+	VALUES (74, 'VIVENCIAAPROBADO', 'APROBADO', NULL, now(), 1, 18, NULL);	

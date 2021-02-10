@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pedrito
+ * @author KSalazar
  */
 @Entity
 @Table(name = "\"CuentaVivenciaDetalle\"", catalog = "\"Plataforma\"", schema = "\"Servicios\"")

@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
- * @author Pedrito
+ * @author KSalazar
  */
 @Path("v1/cuentavivenciadetalle")
 public class CuentaVivenciaDetalleController {

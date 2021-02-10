@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  *
- * @author KAREN
+ * @author KSalazar
  */
 @Service("cuentaVivenciaDetalleService")
 @Transactional(readOnly = true)

@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Pedrito
+ * @author KSalazar
  */
 @Entity
 public class CuentaVivenciaDetalleAux implements Serializable {

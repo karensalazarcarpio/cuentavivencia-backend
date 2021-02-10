@@ -7,7 +7,7 @@ package bo.gob.senasir.cuentavivencia.util;
 
 /**
  *
- * @author Karen Salazar
+ * @author KSalazar
  */
 public class MensajeWebError {
 

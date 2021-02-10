@@ -39,7 +39,7 @@
         </property>
     </bean>
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:/cuentavivenciaDS"/>
+        <property name="jndiName" value="java:comp/env/jdbc/cuentavivenciaDS"/>
         
     </bean>
     <jpa:repositories

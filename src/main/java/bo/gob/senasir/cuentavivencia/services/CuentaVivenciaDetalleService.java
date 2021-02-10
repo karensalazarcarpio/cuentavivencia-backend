@@ -12,7 +12,7 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 
 /**
  *
- * @author KAREN
+ * @author KSalazar
  */
 public interface CuentaVivenciaDetalleService {
 

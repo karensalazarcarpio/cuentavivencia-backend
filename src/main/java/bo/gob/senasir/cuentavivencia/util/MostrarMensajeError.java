@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Pedrito
+ * @author KSalazar
  */
 public class MostrarMensajeError {
 

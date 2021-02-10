@@ -7,7 +7,7 @@ package bo.gob.senasir.cuentavivencia.constantes;
 
 /**
  *
- * @author Pedrito
+ * @author KSalazar
  */
 public class EstadosConstantes {
 
